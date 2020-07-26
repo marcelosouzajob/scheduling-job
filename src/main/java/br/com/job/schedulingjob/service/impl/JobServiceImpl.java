@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -19,6 +20,8 @@ public class JobServiceImpl implements JobService {
 	@Override
 	public List<List<Integer>> definirJobsExecucao(LocalDateTime janelaExecucaoInicio,
 			LocalDateTime janelaExecucaoFinal, List<JobDto> jobsExecucao) {
+		if (Objects.isNull(janelaExecucaoInicio) || Objects.isNull(janelaExecucaoFinal) || Objects.isNull(jobsExecucao)) 
+			return null;
 		
 		final Long tempoParaExecucaoMillis = ChronoUnit.MILLIS.between(janelaExecucaoInicio, janelaExecucaoFinal);
 		final AtomicLong counter = new AtomicLong(0);

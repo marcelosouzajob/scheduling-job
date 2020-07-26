@@ -2,15 +2,21 @@ package br.com.job.schedulingjob.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * Representa um job a ser executado.
+ * O tempoEstimadoExecucao deve ser expresso em horas.
+ */
 public class JobDto implements Comparable<JobDto> {
 	
-	public JobDto() {
-	}
-
+	private static final long FATOR_CONVERSAO_MILLIS = 3600000l;
+	
 	private Integer id;
 	private String descricao;
 	private LocalDateTime dataMaximaConclusao;
 	private Integer tempoEstimadoExecucao;
+	
+	public JobDto() {
+	}
 	
 	public JobDto(Integer id, String descricao, LocalDateTime dataMaximaConclusao, Integer tempoEstimadoExecucao) {
 		super();
@@ -46,7 +52,7 @@ public class JobDto implements Comparable<JobDto> {
 	}
 	
 	public long getTempoEstimadoExecucaoMillis() {
-		return tempoEstimadoExecucao*3600000l;
+		return tempoEstimadoExecucao*FATOR_CONVERSAO_MILLIS;
 	}
 
 	@Override
