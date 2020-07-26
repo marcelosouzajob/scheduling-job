@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -38,10 +39,15 @@ public class JobServiceImpl implements JobService {
 	      .filter(job -> job.getDataMaximaConclusao().compareTo(janelaExecucaoInicio.plusHours(job.getTempoEstimadoExecucao())) >=0) //data maxima de conclusão do job precisa ser no minimo a data de inicio de execução + o tempo estimado
 	      .sorted()
 	      .forEach(adicionaJob);
-	
-		output.forEach(System.out::println);
 		
-		return null;
+		/**
+		 * Retorna somente os ids a serem executados
+		 */
+		return output.stream()
+				     .map(l -> l.stream()
+				    		    .map(JobDto::getId)
+				    		    .collect(Collectors.toList()))
+				     .collect(Collectors.toList());
 	}
 	
 	/**
