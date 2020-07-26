@@ -21,7 +21,7 @@ public class JobServiceImpl implements JobService {
 	public List<List<Integer>> definirJobsExecucao(LocalDateTime janelaExecucaoInicio,
 			LocalDateTime janelaExecucaoFinal, List<JobDto> jobsExecucao) {
 		if (Objects.isNull(janelaExecucaoInicio) || Objects.isNull(janelaExecucaoFinal) || Objects.isNull(jobsExecucao)) 
-			return null;
+			return new ArrayList<>();
 		
 		final Long tempoParaExecucaoMillis = ChronoUnit.MILLIS.between(janelaExecucaoInicio, janelaExecucaoFinal);
 		final AtomicLong counter = new AtomicLong(0);
@@ -33,7 +33,7 @@ public class JobServiceImpl implements JobService {
 		Consumer<JobDto> adicionaJob = job -> {
 			long finalExecucaoDesteJob = counter.get()+job.getTempoEstimadoExecucaoMillis();
 			long ponteiroDataMaximaConclusao = ponteiroDataMaximaConclusao(job, janelaExecucaoInicio);
-			if (!(finalExecucaoDesteJob > tempoParaExecucaoMillis) && !(finalExecucaoDesteJob > ponteiroDataMaximaConclusao) ) {
+			if (finalExecucaoDesteJob <= tempoParaExecucaoMillis && finalExecucaoDesteJob <= ponteiroDataMaximaConclusao ) {
 				counter.getAndAdd(job.getTempoEstimadoExecucaoMillis());
 				getJobList(job, output).add(job);
 			}

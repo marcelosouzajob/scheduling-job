@@ -1,10 +1,12 @@
 package br.com.job.schedulingjob.dto;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Representa um job a ser executado.
  * O tempoEstimadoExecucao deve ser expresso em horas.
+ * Note: this class has a natural ordering that is inconsistent with equals
  */
 public class JobDto implements Comparable<JobDto> {
 	
@@ -58,6 +60,23 @@ public class JobDto implements Comparable<JobDto> {
 	@Override
 	public int compareTo(JobDto arg0) {
 		return this.dataMaximaConclusao.compareTo(arg0.dataMaximaConclusao);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		JobDto other = (JobDto) obj;
+		return Objects.equals(id, other.id);
 	}
 
 	@Override

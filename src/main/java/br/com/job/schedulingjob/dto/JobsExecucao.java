@@ -1,12 +1,12 @@
 package br.com.job.schedulingjob.dto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 public class JobsExecucao {
 	private LocalDateTime janelaExecucaoInicio;
 	private LocalDateTime janelaExecucaoFinal;
-	private ArrayList<JobDto> jobsExecucao;
+	private List<JobDto> lsJobExecucao;
 	public LocalDateTime getJanelaExecucaoInicio() {
 		return janelaExecucaoInicio;
 	}
@@ -19,18 +19,18 @@ public class JobsExecucao {
 	public void setJanelaExecucaoFinal(LocalDateTime janelaExecucaoFinal) {
 		this.janelaExecucaoFinal = janelaExecucaoFinal;
 	}
-	public ArrayList<JobDto> getJobsExecucao() {
-		return jobsExecucao;
+	public List<JobDto> getJobsExecucao() {
+		return lsJobExecucao;
 	}
-	public void setJobsExecucao(ArrayList<JobDto> jobsExecucao) {
-		this.jobsExecucao = jobsExecucao;
+	public void setJobsExecucao(List<JobDto> jobsExecucao) {
+		this.lsJobExecucao = jobsExecucao;
 	}
 	public JobsExecucao(LocalDateTime janelaExecucaoInicio, LocalDateTime janelaExecucaoFinal,
-			ArrayList<JobDto> jobsExecucao) {
+			List<JobDto> jobsExecucao) {
 		super();
 		this.janelaExecucaoInicio = janelaExecucaoInicio;
 		this.janelaExecucaoFinal = janelaExecucaoFinal;
-		this.jobsExecucao = jobsExecucao;
+		this.lsJobExecucao = jobsExecucao;
 	}
 	public JobsExecucao() {
 	}
