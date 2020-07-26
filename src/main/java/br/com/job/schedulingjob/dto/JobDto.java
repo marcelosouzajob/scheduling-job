@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 
 public class JobDto implements Comparable<JobDto> {
 	
+	public JobDto() {
+	}
+
 	private Integer id;
 	private String descricao;
 	private LocalDateTime dataMaximaConclusao;
