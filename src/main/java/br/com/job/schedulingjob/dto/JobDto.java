@@ -44,6 +44,10 @@ public class JobDto implements Comparable<JobDto> {
 	public void setTempoEstimadoExecucao(Integer tempoEstimadoExecucao) {
 		this.tempoEstimadoExecucao = tempoEstimadoExecucao;
 	}
+	
+	public long getTempoEstimadoExecucaoMillis() {
+		return tempoEstimadoExecucao*3600000l;
+	}
 
 	@Override
 	public int compareTo(JobDto arg0) {

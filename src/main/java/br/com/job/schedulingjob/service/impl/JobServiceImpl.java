@@ -28,8 +28,10 @@ public class JobServiceImpl implements JobService {
 		 * Adiciona job em uma array de execução caso ele caiba dentro da janela de execução.
 		 */
 		Consumer<JobDto> adicionaJob = job -> {
-			long ponteiro = counter.getAndAdd(job.getTempoEstimadoExecucao()*3600000);
-			if (!(ponteiro > tempoParaExecucaoMillis)) {
+			long finalExecucaoDesteJob = counter.get()+job.getTempoEstimadoExecucaoMillis();
+			long ponteiroDataMaximaConclusao = ponteiroDataMaximaConclusao(job, janelaExecucaoInicio);
+			if (!(finalExecucaoDesteJob > tempoParaExecucaoMillis) && !(finalExecucaoDesteJob > ponteiroDataMaximaConclusao) ) {
+				counter.getAndAdd(job.getTempoEstimadoExecucaoMillis());
 				getJobList(job, output).add(job);
 			}
 		};
@@ -48,6 +50,16 @@ public class JobServiceImpl implements JobService {
 				    		    .map(JobDto::getId)
 				    		    .collect(Collectors.toList()))
 				     .collect(Collectors.toList());
+	}
+	
+	/**
+	 * Calcula o momento máximo em que um job precisa concluir a sua execução dentro da janela de execução.
+	 * @param job
+	 * @param janelaExecucaoInicio
+	 * @return
+	 */
+	private long ponteiroDataMaximaConclusao(JobDto job, LocalDateTime janelaExecucaoInicio) {
+		return ChronoUnit.MILLIS.between(janelaExecucaoInicio, job.getDataMaximaConclusao());
 	}
 	
 	/**
