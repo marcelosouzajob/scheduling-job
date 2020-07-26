@@ -3,6 +3,7 @@ package br.com.job.schedulingjob.service.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -75,6 +76,18 @@ public class JobServiceImplTest {
 					          Arrays.asList(Integer.valueOf(1)));
 		
 		JobsExecucao jobsExecucao = inputTestCase3();
+		List<List<Integer>> retorno = jobService.definirJobsExecucao(jobsExecucao.getJanelaExecucaoInicio(),
+				                                                     jobsExecucao.getJanelaExecucaoFinal(),
+				                                                     jobsExecucao.getJobsExecucao());
+		
+		assertThat(retorno).isEqualTo(esperado);
+	}
+	
+	@Test
+	public void definirJobsExecucao_testCase4() {
+		List<List<Integer>> esperado = new ArrayList<>();
+		
+		JobsExecucao jobsExecucao = inputTestCase4();
 		List<List<Integer>> retorno = jobService.definirJobsExecucao(jobsExecucao.getJanelaExecucaoInicio(),
 				                                                     jobsExecucao.getJanelaExecucaoFinal(),
 				                                                     jobsExecucao.getJobsExecucao());
@@ -195,6 +208,22 @@ public class JobServiceImplTest {
 				"            \"tempoEstimadoExecucao\": 6\r\n" + 
 				"        },\r\n" + 
 				"        {\r\n" + 
+				"            \"id\": 6,\r\n" + 
+				"            \"descricao\": \"Importação de dados de integração\",\r\n" + 
+				"            \"dataMaximaConclusao\": \"2019-11-10T12:00:00\",\r\n" + 
+				"            \"tempoEstimadoExecucao\": 3\r\n" + 
+				"        }\r\n" + 
+				"    ]\r\n" + 
+				"}";
+		
+        return parseJsonToObject(json);
+	}
+	
+	private JobsExecucao inputTestCase4() {
+		String json = "{\r\n" + 
+				"    \"janelaExecucaoFinal\":  \"2019-11-10T22:00:00\",\r\n" + 
+				"    \"jobsExecucao\": [\r\n" + 
+				"          {\r\n" + 
 				"            \"id\": 6,\r\n" + 
 				"            \"descricao\": \"Importação de dados de integração\",\r\n" + 
 				"            \"dataMaximaConclusao\": \"2019-11-10T12:00:00\",\r\n" + 
