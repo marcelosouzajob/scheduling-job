@@ -37,13 +37,10 @@ public class JobResource {
 			tags = {"SchedulingJob"})
 	@PostMapping("jobs")
 	public ResponseEntity<List<List<Integer>>> definirJobsExecucao(@RequestBody JobsExecucao jobsExecucao) {
-		
-		jobService.definirJobsExecucao(jobsExecucao.getJanelaExecucaoInicio(),  jobsExecucao.getJanelaExecucaoFinal(),  jobsExecucao.getJobsExecucao());
-		
-		List<List<Integer>> retorno = 
-				Arrays.asList(Arrays.asList(Integer.valueOf(1), Integer.valueOf(3)),
-					  Arrays.asList(Integer.valueOf(2)));
-		
-		return ResponseEntity.status(HttpStatus.OK).body(retorno);
+
+		return ResponseEntity.status(HttpStatus.OK)
+				             .body(jobService.definirJobsExecucao(jobsExecucao.getJanelaExecucaoInicio(),
+				            		                              jobsExecucao.getJanelaExecucaoFinal(),
+				            		                              jobsExecucao.getJobsExecucao()));
 	}
 }
